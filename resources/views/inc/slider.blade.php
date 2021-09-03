@@ -19,7 +19,6 @@ $sliders = \App\Models\Slider::all();
                 </div>
             </div>
             @endforeach
-
         </div>
 
         <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
