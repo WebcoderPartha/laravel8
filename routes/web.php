@@ -4,8 +4,11 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\HomeAboutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,8 +55,21 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::post('/dashboard/slider/store', [SliderController::class, 'storeSlider'])->name('slider.store');
     Route::get('/dashboard/slider/delete/{id}', [SliderController::class, 'destroySlider'])->name('slider.delete');
 
-});
+    Route::get('/dashboard/about/all', [HomeAboutController::class, 'index'])->name('admin.home.about');
+    Route::get('/dashboard/about/create', [HomeAboutController::class, 'create'])->name('admin.home.create');
+    Route::post('/dashboard/about/store', [HomeAboutController::class, 'store'])->name('admin.home.store');
+    Route::get('/dashboard/about/edit/{homeAbout}', [HomeAboutController::class, 'edit'])->name('admin.about.edit');
+    Route::put('/dashboard/about/update/{homeAbout}', [HomeAboutController::class, 'update'])->name('admin.home.about.update');
 
+    // Profile
+    Route::get('/dashboard/profile', [ProfileController::class, 'userProfile'])->name('user.profile.admin');
+    Route::put('/dashboard/profile/update', [ProfileController::class, 'updateProfile'])->name('update.profile');
+
+
+});
+// Password
+Route::get('/dashboard/user/password', [PasswordController::class, 'index'])->name('change.password');
+Route::post('/dashboard/user/password/update', [PasswordController::class, 'updatePassword'])->name('update.password');
 
 // Frontend Routes Here
 Route::get('/', [HomeController::class, 'index'])->name('home.index');

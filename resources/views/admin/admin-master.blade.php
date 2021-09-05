@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Sleek - Admin Dashboard Template</title>
+    <title>Admin Panel | Webcoder</title>
 
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500" rel="stylesheet"/>
     <link href="https://cdn.materialdesignicons.com/3.0.39/css/materialdesignicons.min.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <!-- PLUGINS CSS STYLE -->
     <link href="{{ asset('backend/assets/plugins/toaster/toastr.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('backend/assets/plugins/nprogress/nprogress.css') }}" rel="stylesheet" />
@@ -136,25 +136,38 @@
                         <!-- User Account -->
                         <li class="dropdown user-menu">
                             <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                <img src="{{ asset('backend/assets/img/user/user.png') }}" class="user-image" alt="User Image" />
+                                @if(Auth::user()->profile_photo_path !== NULL)
+                                    <img src="{{ asset(Auth::user()->profile_photo_path) }}" class="img-circle" alt="User Image" />
+                                @else
+                                    <img src="{{ asset('backend/assets/img/user/user.png') }}" class="img-circle" alt="User Image" />
+                                @endif
                                 <span class="d-none d-lg-inline-block">{{ Auth::user()->name }}</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <!-- User image -->
                                 <li class="dropdown-header">
-                                    <img src="{{ asset('backend/assets/img/user/user.png') }}" class="img-circle" alt="User Image" />
+                                    @if(Auth::user()->profile_photo_path !== NULL)
+                                    <img src="{{ asset(Auth::user()->profile_photo_path) }}" class="img-circle" alt="User Image" />
+                                    @else
+                                        <img src="{{ asset('backend/assets/img/user/user.png') }}" class="img-circle" alt="User Image" />
+                                    @endif
                                     <div class="d-inline-block">
                                         {{ Auth::user()->name }} <small class="pt-1">{{ Auth::user()->email }}</small>
                                     </div>
                                 </li>
 
                                 <li>
-                                    <a href="profile.html">
+                                    <a href="{{ route('user.profile.admin') }}">
                                         <i class="mdi mdi-account"></i> My Profile
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="email-inbox.html">
+                                    <a href="{{ route('change.password') }}">
+                                        <i class="mdi mdi-key"></i> Password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
                                         <i class="mdi mdi-email"></i> Message
                                     </a>
                                 </li>
@@ -229,9 +242,7 @@
 <script src="{{ asset('backend/assets/js/date-range.js') }}"></script>
 <script src="{{ asset('backend/assets/js/map.js') }}"></script>
 <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
-
-
-
-
+<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+{!! Toastr::message() !!}
 </body>
 </html>
